@@ -2,7 +2,7 @@ require_dependency "blorgh/application_controller"
 
 module Blorgh
   class PostsController < ApplicationController
-    before_action :authenticate_user!
+
     before_action :set_post, only: [:show, :edit, :update, :destroy]
 
     # GET /posts
@@ -17,7 +17,6 @@ module Blorgh
     # GET /posts/new
     def new
       @post = Post.new
-      @post.user = current_user
     end
 
     # GET /posts/1/edit
@@ -27,7 +26,6 @@ module Blorgh
     # POST /posts
     def create
       @post = Post.new(post_params)
-      @post.user = current_user
       if @post.save
         redirect_to @post, notice: 'Post was successfully created.'
       else
@@ -37,8 +35,6 @@ module Blorgh
 
     # PATCH/PUT /posts/1
     def update
-      puts @post.inspect
-      @post.user = current_user
       if @post.update(post_params)
         redirect_to @post, notice: 'Post was successfully updated.'
       else
